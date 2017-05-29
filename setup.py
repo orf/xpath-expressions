@@ -28,14 +28,14 @@ if readme_path.exists():
 
 setup(
     name='xpath-expressions',
-    version='0.2.1',
+    version='0.2.2',
     packages=['xpath', 'xpath.functions'],
     url='https://github.com/orf/xpath-expressions',
     license='MIT',
     author='orf',
     long_description=readme,
     author_email='tom@tomforb.es',
-    description='Manipulate xpath expressions in pure python',
+    description='Treat XPath expressions as Python objects ',
     classifiers=[
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',

@@ -9,6 +9,11 @@ xpath-expressions
 .. |pypi| image:: https://badge.fury.io/py/xpath-expressions.svg
     :target: https://badge.fury.io/py/xpath-expressions
 
+
+.. code:: shell
+
+  pip install xpath-expressions
+
 This is a small, lightweight Python 3.5+ library to aide in the manipulations of
 xpath expressions, allowing you to manipulate them as Python objects with
 Python expressions. For example:
