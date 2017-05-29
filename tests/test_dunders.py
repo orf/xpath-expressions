@@ -35,3 +35,11 @@ def test_operator_expression(value_expr, op, joiner):
         assert result.string == value_expr.string + joiner + other.string
     else:
         assert result.string == value_expr.string + joiner + arg_to_representation(other)
+
+
+def test_getitem(expr):
+    sliced = expr[1]
+    assert isinstance(sliced, Expression)
+    sliced = expr[1:11]
+    assert isinstance(sliced, list)
+    assert len(sliced) == 10

@@ -17,4 +17,4 @@ install:
    - pip install pytest-xdist pytest --upgrade
 
 script:
-   - pytest .
+   - python setup.py test

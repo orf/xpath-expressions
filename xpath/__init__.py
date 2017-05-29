@@ -1,4 +1,5 @@
 from functools import singledispatch
+from typing import Union, List, Iterable
 
 
 class Expression:
@@ -11,45 +12,45 @@ class Expression:
         return "<Expression: %s>" % self.string
 
     @property
-    def text(self):
+    def text(self) -> 'IterableExpression':
         return IterableExpression(self.string + "/text()")
 
     @property
-    def any_node(self):
+    def any_node(self) -> 'Expression':
         return Expression(self.string + "/node()")
 
-    def add_path(self, path):
+    def add_path(self, path) -> 'Expression':
         return Expression(self.string + path)
 
     @property
-    def count(self):
+    def count(self) -> 'Expression':
         from .xpath_1 import count
         return count(self)
 
     @property
-    def name(self):
+    def name(self) -> 'Expression':
         from .xpath_1 import name
         return name(self)
 
-    def value(self):
+    def value(self) -> str:
         return self.string
 
     @property
-    def attributes(self):
+    def attributes(self) -> 'AttributesExpression':
         return AttributesExpression("%s/@*" % self.string)
 
     @property
-    def comments(self):
+    def comments(self) -> 'CommentsExpression':
         return CommentsExpression(self.string + "/comment()")
 
     @property
-    def children(self):
+    def children(self) -> 'IterableExpression':
         return IterableExpression("%s/*" % self.string)
 
-    def expr(self, symbol, value):
+    def expr(self, symbol, value) -> 'Expression':
         return Expression("%s%s%s" % (self.value(), symbol, arg_to_representation(value)))
 
-    def __getitem__(self, item):
+    def __getitem__(self, item) -> Union[List['Expression'], 'Expression']:
         if isinstance(item, slice):
             return [
                 self[idx]
@@ -58,44 +59,41 @@ class Expression:
 
         return Expression("%s[%s]" % (self.value(), item))
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> 'Expression':
         return self.expr("=", other)
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> 'Expression':
         return self.expr("!=", other)
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> 'Expression':
         return self.expr("<", other)
 
-    def __gt__(self, other):
+    def __gt__(self, other) -> 'Expression':
         return self.expr(">", other)
 
-    def __le__(self, other):
+    def __le__(self, other) -> 'Expression':
         return self.expr("<=", other)
 
-    def __ge__(self, other):
+    def __ge__(self, other) -> 'Expression':
         return self.expr(">=", other)
 
-    def __add__(self, other):
+    def __add__(self, other) -> 'Expression':
         return self.expr("+", other)
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> 'Expression':
         return self.expr("-", other)
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> 'Expression':
         return self.expr("*", other)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other) -> 'Expression':
         return Expression(f'{self.string}/{other}')
 
-    def __and__(self, other):
+    def __and__(self, other) -> 'Expression':
         return self.expr(" and ", other)
 
-    def __or__(self, other):
+    def __or__(self, other) -> 'Expression':
         return self.expr(" or ", other)
-
-    def __unicode__(self):
-        return "%s" % self.value()
 
     def __str__(self):
         return "%s" % self.value()
@@ -106,7 +104,7 @@ class Node(Expression):
 
 
 class IterableExpression(Expression):
-    def __call__(self, count):
+    def __call__(self, count) -> Iterable['Expression']:
         for i in range(1, count + 1):
             yield self[i]
 
@@ -123,7 +121,7 @@ class Attribute(Expression):
     def __repr__(self):
         return "<Attribute: %s>" % self.string
 
-    def value(self):
+    def value(self) -> str:
         return "@%s" % self.string
 
 
@@ -148,7 +146,7 @@ class Function(Expression):
         if self.max_args != -1 and len(args) > self.max_args:
             raise ValueError("%s requires at max %s arguments. Args: %s" % (self.string, self.max_args, args))
 
-    def get_string(self, args):
+    def get_string(self, args) -> str:
         str_args = ",".join((arg_to_representation(a) for a in args))
         return "%s(%s)" % (self.string, str_args)
 
@@ -156,7 +154,7 @@ class Function(Expression):
         self.validate_args(self.args)
         return self.get_string(self.args)
 
-    def __call__(self, *args):
+    def __call__(self, *args) -> 'Expression':
         call_args = self.args + args
         self.validate_args(call_args)
         return Expression(self.get_string(call_args))
