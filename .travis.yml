@@ -14,7 +14,7 @@ python:
    - pypy3
 
 install:
-   - pip install pytest-xdist pytest --upgrade
+   - pip install pytest-xdist pytest wheel --upgrade
 
 script:
    - python setup.py test
