@@ -1,11 +1,10 @@
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
 import sys
 import pathlib
 
 if sys.version_info < (3, 5):
-    raise RuntimeError('xcat requires Python 3.5 and above!')
-
-from setuptools.command.test import test as TestCommand
+    raise RuntimeError('xcat requires Python 3.5 or later!')
 
 
 class PyTest(TestCommand):
