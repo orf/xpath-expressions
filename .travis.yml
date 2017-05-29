@@ -8,10 +8,10 @@ notifications:
 
 
 python:
-   - 2.7
-   - 3.4
    - 3.5
    - 3.6
+   - nightly
+   - pypy3
 
 install:
    - pip install pytest-xdist pytest --upgrade
