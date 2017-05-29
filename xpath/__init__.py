@@ -87,7 +87,7 @@ class Expression:
         return self.expr("*", other)
 
     def __truediv__(self, other) -> 'Expression':
-        return Expression(f'{self.string}/{other}')
+        return Expression('{string}/{other}'.format(string=self.string, other=other))
 
     def __and__(self, other) -> 'Expression':
         return self.expr(" and ", other)
