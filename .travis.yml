@@ -3,6 +3,10 @@ cache: pip
 git:
   depth: 1
 
+notifications:
+  email: false
+
+
 python:
    - 2.7
    - 3.4
