@@ -1,4 +1,4 @@
-from . import Function
+from .. import Function
 
 environment_variable = Function('environment-variable')
 available_environment_variables = Function('available-environment-variables')

@@ -1,4 +1,4 @@
-from . import Function
+from .. import Function
 
 lower_case = Function("lower-case")
 ends_with = Function('ends-with', args_count=2)

@@ -1,5 +1,6 @@
 from setuptools import setup
 import sys
+import pathlib
 
 if sys.version_info < (3, 5):
     raise RuntimeError('xcat requires Python 3.5 and above!')
@@ -21,13 +22,19 @@ class PyTest(TestCommand):
         sys.exit(errno)
 
 
+readme = ""
+readme_path = pathlib.Path("README.rst")
+if readme_path.exists():
+    readme = readme_path.read_text()
+
 setup(
     name='xpath-expressions',
     version='0.2',
-    packages=['xpath'],
+    packages=['xpath', 'xpath.functions'],
     url='https://github.com/orf/xpath-expressions',
     license='MIT',
     author='orf',
+    readme=readme,
     author_email='tom@tomforb.es',
     description='Manipulate xpath expressions in pure python',
     classifiers=[

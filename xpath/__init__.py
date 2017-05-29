@@ -24,12 +24,12 @@ class Expression:
 
     @property
     def count(self) -> 'Expression':
-        from .xpath_1 import count
+        from .functions import count
         return count(self)
 
     @property
     def name(self) -> 'Expression':
-        from .xpath_1 import name
+        from .functions import name
         return name(self)
 
     def value(self) -> str:
