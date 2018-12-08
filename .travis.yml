@@ -15,6 +15,7 @@ python:
 
 install:
   - pip install pytest lxml
+  - pip install -e .
 
 script:
   - pytest
