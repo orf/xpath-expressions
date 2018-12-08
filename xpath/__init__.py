@@ -1,4 +1,4 @@
-from functools import singledispatch
+from functools import singledispatch, lru_cache
 from typing import Union, List, Iterable
 
 
@@ -24,13 +24,11 @@ class Expression:
 
     @property
     def count(self) -> 'Expression':
-        from .functions import count
-        return count(self)
+        return func.count(self)
 
     @property
     def name(self) -> 'Expression':
-        from .functions import name
-        return name(self)
+        return func.name(self)
 
     def value(self) -> str:
         return self.string
@@ -126,41 +124,18 @@ class Attribute(Expression):
 
 
 class Function(Expression):
-    __slots__ = ('string', 'min_args', 'max_args', 'args_count', 'args')
-
-    def __init__(self, name, *args, args_count=-1, min_args=-1, max_args=-1):
-        super().__init__(name)
-        self.min_args = min_args
-        self.max_args = max_args
-        self.args_count = args_count
-
-        self.args = args
-
-    def validate_args(self, args):
-        if self.args_count != -1 and len(args) != self.args_count:
-            raise ValueError("%s requires %s arguments. Args: %s" % (self.string, self.args_count, args))
-
-        if self.min_args != -1 and len(args) < self.min_args:
-            raise ValueError("%s requires at least %s arguments. Args: %s" % (self.string, self.min_args, args))
-
-        if self.max_args != -1 and len(args) > self.max_args:
-            raise ValueError("%s requires at max %s arguments. Args: %s" % (self.string, self.max_args, args))
-
     def get_string(self, args) -> str:
         str_args = ",".join((arg_to_representation(a) for a in args))
         return "%s(%s)" % (self.string, str_args)
 
     def __str__(self):
-        self.validate_args(self.args)
-        return self.get_string(self.args)
+        return self.get_string(tuple)
 
     def __call__(self, *args) -> 'Expression':
-        call_args = self.args + args
-        self.validate_args(call_args)
-        return Expression(self.get_string(call_args))
+        return Expression(self.get_string(args))
 
     def __repr__(self):
-        return "<Function: %s %s>" % (self.string, self.args)
+        return f"<Function: %s>" % self.string
 
 
 class Literal(Expression):
@@ -196,6 +171,20 @@ def _(other):
     return str(other)
 
 
+@lru_cache(maxsize=50)
+def identifier_to_function(namespace, identifier):
+    new_identifier = namespace + identifier.rstrip('_').replace('_', '-')
+    return Function(new_identifier)
+
+
+class Functions:
+    def __init__(self, namespace=""):
+        self.namespace = namespace
+
+    def __getattr__(self, item) -> 'Function':
+        return identifier_to_function(self.namespace, item)
+
+
 A = Attribute
 E = Expression
 L = Literal
@@ -203,3 +192,5 @@ F = Function
 N = Node
 
 ROOT_NODE = E('/*[1]')
+
+func = Functions()

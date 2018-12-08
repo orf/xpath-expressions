@@ -1,4 +1,4 @@
-from xpath import IterableExpression, Expression, Function, AttributesExpression, CommentsExpression
+from xpath import IterableExpression, Expression, AttributesExpression, CommentsExpression
 
 
 def test_text_returns_iterable(expr):

@@ -8,12 +8,13 @@ notifications:
 
 
 python:
-   - 3.5
-   - 3.6
-   - nightly
+  - 3.5
+  - 3.6
+  - 3.7
 
 install:
-   - pip install pytest-xdist pytest lxml --upgrade
+  - pip install pipenv --upgrade
+  - pipenv install --skip-lock
 
 script:
-   - python setup.py test
+  - pipenv run pytest

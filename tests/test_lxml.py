@@ -1,6 +1,3 @@
-from xpath import Expression
-
-
 def test_root_node(xml_doc, xml_root):
     assert xml_doc.xpath(str(xml_root.name)) == 'root'
 
