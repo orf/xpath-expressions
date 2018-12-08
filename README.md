@@ -1,6 +1,6 @@
 # XPath-expressions
 
-![](https://travis-ci.com/orf/xpath-expressions.svg?branch=master)
+![](https://travis-ci.org/orf/xpath-expressions.svg?branch=master)
 ![](https://badge.fury.io/py/xpath-expressions.svg)
 
 
