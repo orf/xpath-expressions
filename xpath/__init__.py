@@ -135,7 +135,7 @@ class Function(Expression):
         return Expression(self.get_string(args))
 
     def __repr__(self):
-        return f"<Function: %s>" % self.string
+        return "<Function: %s>" % self.string
 
 
 class Literal(Expression):
