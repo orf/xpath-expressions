@@ -1,7 +1,7 @@
 # XPath-expressions
 
-![https://travis-ci.org/orf/xpath-expressions](https://travis-ci.org/orf/xpath-expressions.svg?branch=master)
-![https://pypi.org/project/xpath-expressions/](https://badge.fury.io/py/xpath-expressions.svg)
+![Tests](https://github.com/orf/xpath-expressions/workflows/Python%20package/badge.svg)
+[![https://pypi.org/project/xpath-expressions/](https://badge.fury.io/py/xpath-expressions.svg)](https://pypi.org/project/xpath-expressions/)
 
 
 This is a small, lightweight Python 3.5+ library to aide in the manipulations of
