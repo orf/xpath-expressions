@@ -1,5 +1,5 @@
 def test_root_node(xml_doc, xml_root):
-    assert xml_doc.xpath(str(xml_root.name)) == 'root'
+    assert xml_doc.xpath(str(xml_root.name)) == "root"
 
 
 def test_root_node_attr(xml_doc, xml_root):

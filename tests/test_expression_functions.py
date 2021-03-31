@@ -1,4 +1,9 @@
-from xpath import IterableExpression, Expression, AttributesExpression, CommentsExpression
+from xpath import (
+    IterableExpression,
+    Expression,
+    AttributesExpression,
+    CommentsExpression,
+)
 
 
 def test_text_returns_iterable(expr):
@@ -14,9 +19,9 @@ def test_any_node(expr):
 
 
 def test_add_path(expr):
-    new_expr = expr.add_path('/test')
+    new_expr = expr.add_path("/test")
     assert new_expr is not expr
-    assert new_expr.string == expr.string + '/test'
+    assert new_expr.string == expr.string + "/test"
 
 
 def test_value_returns_string(expr):
@@ -36,5 +41,4 @@ def test_children_returns_iterable_expression(expr):
 
 
 def test_expr_works():
-    assert Expression('test').expr('==', 1) == 'test==1'
-
+    assert Expression("test").expr("==", 1) == "test==1"
