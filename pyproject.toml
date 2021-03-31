@@ -4,7 +4,7 @@ name = "xpath-expressions"
 packages = [
     { include = "xpath" }
 ]
-version = "1.0.2"
+version = "1.1.0"
 description = "Treat XPath expressions as Python objects "
 license = "MIT"
 classifiers = [
